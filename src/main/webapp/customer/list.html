@@ -21,6 +21,7 @@
 		$(".info").remove();
 		var pageSum = $("#pageSum").text();
 		var page = $("#pageNum").text();
+		
 		if (page <= 1) {
 			page = 2;
 		} else {
@@ -29,19 +30,18 @@
 		getList(parseInt(page) - 1, pageSize);
 
 	}
+	
 	function nextPage() {
-
 		var pageSize = $("#pageSize option:selected").val();
 		$(".info").remove();
 		var pageSum = $("#pageSum").text();
 		var page = $("#pageNum").text();
-		if (page >= pageSum) {
-			page = pageSum - 1;
+		if (page >= parseInt(pageSum)) {
+			page = parseInt(pageSum) - 1;
 		} else {
 			page = page;
 		}
 		getList(parseInt(page) + 1, pageSize);
-
 	}
 	//跳转
 	function jump() {
@@ -65,8 +65,8 @@
 	}
 
 	function getList(page, pageSize) {
-		$
-				.ajax({
+		
+				$.ajax({
 					type : "POST", //提交方式  
 					url : "/toList.action",//路径  
 					data : {
