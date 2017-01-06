@@ -17,4 +17,5 @@
 
 <bean id="filmService" class="com.service.impl.FilmServiceImpl"></bean>
 <bean id="customerService" class="com.service.impl.CustomerServiceImpl"></bean>
+<bean id="languageService" class="com.service.impl.LanguageServiceImpl"></bean>
 </beans>

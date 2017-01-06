@@ -10,7 +10,6 @@
 <script type="text/javascript">
 	var id;
 $(document).ready(function() {
-	
 	var urlpars = window.location.search;
 	if(urlpars!= null && urlpars!=""){
 		 var pars =urlpars.split('=');
@@ -26,18 +25,22 @@ $(document).ready(function() {
 					var film_id = map.film.film_id;
 					var title = map.film.title;
 					var description = map.film.description;
-					var language_id = map.film.language_id;
+					var id = map.film.language_id;
 					
+					//根据id找到select，并且将从数据库查到的数据拼接进去，完成动态展示语言
+					var selector=$("#language_id");  
+					for (var i = 0; i < map.languageList.length; i++) {
+						var language_id=map.languageList[i].language_id;
+						var language_name =map.languageList[i].name;
+						selector.append('<option value="'+language_id+'">'+language_name+'</option>'); 
+					}
 					$("#film_id").val(film_id);
 					$("#title").val(title);
 					$("#description").val(description);
-					
-					$("#language_id").val(language_id);
+					$("#language_id").val(id);
 				}
 			});
 	}
-	
-	
 });
 </script>
 </head>
@@ -64,12 +67,7 @@ $(document).ready(function() {
 					<td> <input type="text" id="title" name="title"></td>
 					<td> <input type="text" id="description" name="description"></td>
 					<td> <select name="language_id" id="language_id"class="form-control selectpicker">
-							<option value="1">English</option>
-							<option value="2">Italian</option>
-							<option value="3">Japanese</option>
-							<option value="4">Mandarin</option>
-							<option value="5">French</option>
-							<option value="6">German</option>
+							
 					</select></td>
 					</tr>
 					</tbody>

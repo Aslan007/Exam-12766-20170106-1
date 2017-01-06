@@ -15,13 +15,17 @@ import org.springframework.web.servlet.ModelAndView;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.po.Film;
+import com.po.Language;
 import com.service.FilmService;
+import com.service.LanguageService;
 
 
 @Controller
 public class FilmController {
 	@Autowired
 	private FilmService filmService;
+	@Autowired
+	private LanguageService languageService;
 	
 	
 	@ResponseBody
@@ -91,9 +95,12 @@ public class FilmController {
 		int i = Integer.parseInt(id);
 		
 		Film film = filmService.findFilmById(i);
+		
+		List<Language> list = languageService.findLanguageAll();
 
 		Map map = new HashMap();
 		map.put("film", film);
+		map.put("languageList", list);
 		return map;
 	}
 	

@@ -4,7 +4,6 @@
 <mapper namespace="com.mapper.FilmMapper" >
 
   
-  
   <select id="findAll" resultType="com.po.Film">
 	select film_id,title,description,name language 
 	from film,language 
@@ -42,4 +41,5 @@
 		select * from film where film_id = #{film_id}
 	
 	</select>
+	
   </mapper>
