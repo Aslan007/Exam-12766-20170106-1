@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.FilmMapper" >
+
+  
+  
+  <select id="findAll" resultType="com.po.Film">
+	select film_id,title,description,name language 
+	from film,language 
+	where
+	film.language_id = language.language_id
+  </select>
+  
+   <select id="findFilmByTitle" parameterType="string" resultType="com.po.Film">
+ 	 select * from film
+ 	  <where>
+ 	   title like %${title}%
+ 	 </where>
+  </select>
+  
+  
+  <delete id="deleteFilmById" parameterType="Integer">
+  delete from film where film_id = #{film_id}
+  </delete>
+
+	<insert id="addFilm" parameterType="com.po.Film">
+		insert into film
+		(title,description,language_id)
+		values(#{title},#{description},#{language_id})
+	</insert>
+
+	<update id="updateFilm" parameterType="com.po.Film">
+		update film set
+		title = #{title},
+		description = #{description},
+		language_id =#{language_id}
+		where film_id = #{film_id}
+	</update>
+	
+	<select id="findFilmById" parameterType="Integer" resultType="com.po.Film">
+		select * from film where film_id = #{film_id}
+	
+	</select>
+  </mapper>

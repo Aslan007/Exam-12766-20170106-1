@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>update film</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+<script type="text/javascript">
+	var id;
+$(document).ready(function() {
+	
+	var urlpars = window.location.search;
+	if(urlpars!= null && urlpars!=""){
+		 var pars =urlpars.split('=');
+			id=pars[1];
+			
+			$.ajax({
+				type : "POST", //提交方式  
+				url : "/toUpdate.action",//路径  
+				data : {
+					"id" : id
+				},//数据，这里使用的是Json格式进行传输  
+				success : function(map) {//返回数据根据结果进行相应的处理  
+					var film_id = map.film.film_id;
+					var title = map.film.title;
+					var description = map.film.description;
+					var language_id = map.film.language_id;
+					
+					$("#film_id").val(film_id);
+					$("#title").val(title);
+					$("#description").val(description);
+					
+					$("#language_id").val(language_id);
+				}
+			});
+	}
+	
+	
+});
+</script>
+</head>
+<body>
+<div class="container">
+<br/><br/>
+
+
+		<div class="row clearfix">
+			<div class="col-md-12 column">
+			<form action="/update.action">
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>film_id</th>
+							<th>title</th>
+							<th>description</th>
+							<th>language</th>
+						</tr>
+					</thead>
+					<tbody id="tbody">
+					<tr class="info">
+					<td> <input type="text" id="film_id" name="film_id" readonly></td>
+					<td> <input type="text" id="title" name="title"></td>
+					<td> <input type="text" id="description" name="description"></td>
+					<td> <select name="language_id" id="language_id"class="form-control selectpicker">
+							<option value="1">English</option>
+							<option value="2">Italian</option>
+							<option value="3">Japanese</option>
+							<option value="4">Mandarin</option>
+							<option value="5">French</option>
+							<option value="6">German</option>
+					</select></td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container">
+ <div class="col-md-2"><button type="button" class="btn btn-info" onclick="window.location='list.html'">return List</button></div>
+ <div class="col-md-10"><input type="submit" class="btn btn-info" value="updateSubmit"></div>
+ </form>
+ </div>
+ 
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+	<script type="text/javascript">
+	var i = 5; 
+	var intervalid; 
+	intervalid = setInterval("fun()", 1000); 
+	function fun() { 
+	if (i == 0) { 
+	window.location.href = "login.html"; 
+	clearInterval(intervalid); 
+	} 
+	document.getElementById("mes").innerHTML = i; 
+	i--; 
+	} 
+	</script> 
+<title>Erro Page!</title>
+</head>
+<body>
+<div style="margin-left: 40%; margin-top:  10%;">
+	<div id="errorfrm">
+		<h3>Login Erro!</h3>
+		<div id="error" style=" color:red; ">
+			<p>Erro Message：UserName is wrong or null!</p>
+			<p>
+				After<span id="mes">5</span> seconds return to Login Page
+			</p>
+		</div>
+		<div>
+			<p>or you could click the link to return</p>
+			<a href="login.html">click me</a>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

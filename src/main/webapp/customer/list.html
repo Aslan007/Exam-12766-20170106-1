@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>film List</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+
+<script type="text/javascript">
+	//定义一个状态变量，若在查询状态，则为true，方便上一页下一页做判断
+	$(document).ready(function() {
+		var page = $("#pageNum").text();
+		var pageSize = $("#pageSize option:selected").val();
+		getList(page, pageSize);
+	});
+	function lastPage() {
+		var pageSize = $("#pageSize option:selected").val();
+		$(".info").remove();
+		var pageSum = $("#pageSum").text();
+		var page = $("#pageNum").text();
+		if (page <= 1) {
+			page = 2;
+		} else {
+			page = page;
+		}
+		getList(parseInt(page) - 1, pageSize);
+
+	}
+	function nextPage() {
+
+		var pageSize = $("#pageSize option:selected").val();
+		$(".info").remove();
+		var pageSum = $("#pageSum").text();
+		var page = $("#pageNum").text();
+		if (page >= pageSum) {
+			page = pageSum - 1;
+		} else {
+			page = page;
+		}
+		getList(parseInt(page) + 1, pageSize);
+
+	}
+	//跳转
+	function jump() {
+		var pageSize = $("#pageSize option:selected").val();
+		$(".info").remove();
+		var jumpPage = parseInt($("#jumpPage").val());
+		var pageSum = parseInt($("#pageSum").text());
+		var pageNum = parseInt($("#pageNum").text());
+
+		if (!isNaN(jumpPage)) {
+			if (jumpPage > pageSum) {
+
+				getList(pageSum, pageSize);
+			} else {
+				getList(jumpPage, pageSize);
+			}
+		} else {
+			getList(pageNum, pageSize);
+		}
+
+	}
+
+	function getList(page, pageSize) {
+		$
+				.ajax({
+					type : "POST", //提交方式  
+					url : "/toList.action",//路径  
+					data : {
+						"page" : page,
+						"pageSize" : pageSize
+					},//数据，这里使用的是Json格式进行传输  
+					success : function(map) {//返回数据根据结果进行相应的处理  
+
+						var pageSum = map.pageSum;
+						var pageNum = map.pageNum;
+						var pageSize = map.pageSize;
+						$("#pageSum").text(pageSum);
+						$("#pageNum").text(pageNum);
+						$("#pageSize").val(pageSize);
+
+						for (var i = 0; i < map.filmList.length; i++) {
+							$("#tbody")
+									.append(
+											'<tr class="info"><td>'
+													+ map.filmList[i].film_id
+													+ '</td><td>'
+													+ map.filmList[i].title
+													+ '</td><td>'
+													+ map.filmList[i].description
+													+ '</td><td>'
+													+ map.filmList[i].language
+													+ '</td><td>'
+													+ '<a href="/customer/update.html?id='
+													+ map.filmList[i].film_id
+													+ '">update</a>'
+													+ '</td><td>'
+													+ '<a href="#" onclick="deleteUser('
+													+ map.filmList[i].film_id
+													+ ');")">delete</a>'
+													+ '</td></tr>');
+						}
+					}
+				});
+	}
+
+	function deleteUser(id) {
+		var page = $("#pageNum").text();
+		var pageSize = $("#pageSize option:selected").val();
+		if (confirm("Are you sure to delete this data?")) {
+			$.ajax({
+				type : "POST", //提交方式  
+				url : "/delete.action",//路径  
+				data : {
+					"id" : id
+				},//数据，这里使用的是Json格式进行传输  
+				success : function(erro) {//返回数据根据结果进行相应的处理  
+					//erro为1时，代表有错，不能删
+					if (erro == 1) {
+						alert("dear,this data has a foreign key,can not delete,you could try to delete others");
+					} else {
+						$(".info").remove();
+						getList(page,pageSize);
+					}
+				}
+			});
+		} else {
+			return false;
+		}
+	}
+	function refresh(){
+		var page = $("#pageNum").text();
+		var pageSize = $("#pageSize option:selected").val();
+		$(".info").remove();
+		getList(page, pageSize);
+		
+	}
+</script>
+</head>
+<body>
+	<br />
+	<div class="container">
+		<div class="row clearfix">
+			<div class="col-md-2">
+				<button type="button" class="btn btn-primary"
+					onclick="window.location='/customer/add.html'">Add Film</button>
+			</div>
+		</div>
+	</div>
+	<br />
+	<br />
+	<div class="container">
+		<div class="row clearfix">
+			<div class="col-md-12 column">
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>film_id</th>
+							<th>title</th>
+							<th>description</th>
+							<th>language</th>
+							<th>operation</th>
+							<th>operation</th>
+						</tr>
+					</thead>
+					<tbody id="tbody">
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="foot" style="margin-left: 8%">
+		<ul class="pagination">
+			<li><a href="#" onclick="lastPage();">&laquo;</a></li>
+			<li><a href="#">pageNow:<span id="pageNum" name="pageNum">1</span></a></li>
+			<li><a href="#">pageSum:<span id="pageSum" name="pageSum"></span></a></li>
+			<li><a href="#" onclick="nextPage();">&raquo;</a></li>
+
+			<li>
+				<form class="bs-example bs-example-form" role="form">
+					<div class="col-lg-2">
+						<div class="input-group">
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" onclick="jump();">jumpTo:</button>
+							</span> <input type="text" class="form-control" id="jumpPage">
+						</div>
+					</div>
+				</form>
+				
+				<div style="width: 80px; display: inline-block;" >
+					<select name="pageSize" id="pageSize" onchange="refresh();"
+						class="form-control selectpicker">
+						<option value="10" selected="selected">10</option>
+						<option value="20">20</option>
+						<option value="50">50</option>
+					</select>
+				</div>
+				
+			</li>
+		</ul>
+	</div>
+</body>
+</html>
