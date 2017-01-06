@@ -23,6 +23,7 @@
 		var page = $("#pageNum").text();
 		
 		if (page <= 1) {
+			alert("this is the first page!");
 			page = 2;
 		} else {
 			page = page;
@@ -37,6 +38,7 @@
 		var pageSum = $("#pageSum").text();
 		var page = $("#pageNum").text();
 		if (page >= parseInt(pageSum)) {
+			alert("this is the last page!");
 			page = parseInt(pageSum) - 1;
 		} else {
 			page = page;
