@@ -61,7 +61,6 @@
 		} else {
 			getList(pageNum, pageSize);
 		}
-
 	}
 
 	function getList(page, pageSize) {
@@ -172,8 +171,8 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="foot" style="margin-left: 8%">
+<form class="bs-example bs-example-form" role="form">
+	<div class="foot" style="margin-left: 8%; display: inline-block;">
 		<ul class="pagination">
 			<li><a href="#" onclick="lastPage();">&laquo;</a></li>
 			<li><a href="#">pageNow:<span id="pageNum" name="pageNum">1</span></a></li>
@@ -181,17 +180,18 @@
 			<li><a href="#" onclick="nextPage();">&raquo;</a></li>
 
 			<li>
-				<form class="bs-example bs-example-form" role="form">
-					<div class="col-lg-2">
-						<div class="input-group">
+				
+					<div class="col-lg-3"style="display: inline-block;">
+						<div class="input-group" >
 							<span class="input-group-btn">
 								<button class="btn btn-default" type="button" onclick="jump();">jumpTo:</button>
-							</span> <input type="text" class="form-control" id="jumpPage">
+							</span> <input type="text" class="form-control" id="jumpPage" width="20px">
+							
 						</div>
 					</div>
-				</form>
+			
 				
-				<div style="width: 80px; display: inline-block;" >
+				<div style="width: 100px; display: inline-block; margin-left: 10%" >
 					<select name="pageSize" id="pageSize" onchange="refresh();"
 						class="form-control selectpicker">
 						<option value="10" selected="selected">10</option>
@@ -203,5 +203,6 @@
 			</li>
 		</ul>
 	</div>
+	</form>
 </body>
 </html>
