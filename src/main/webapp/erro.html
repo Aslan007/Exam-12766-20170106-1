@@ -12,7 +12,7 @@
 	intervalid = setInterval("fun()", 1000); 
 	function fun() { 
 	if (i == 0) { 
-	window.location.href = "login.html"; 
+	window.location.href = "/login.html"; 
 	clearInterval(intervalid); 
 	} 
 	document.getElementById("mes").innerHTML = i; 
@@ -24,16 +24,15 @@
 <body>
 <div style="margin-left: 40%; margin-top:  10%;">
 	<div id="errorfrm">
-		<h3>Login Erro!</h3>
-		<div id="error" style=" color:red; ">
-			<p>Erro Message：UserName is wrong or null!</p>
+		<div id="error">
+			<p  style=" color:red; ">ERRO MESSAGE: UserName is wrong or null!</p>
 			<p>
-				After<span id="mes">5</span> seconds return to Login Page
+				After <span id="mes"  style=" color:red;size:20 px;">5</span> seconds return to Login Page
 			</p>
 		</div>
 		<div>
 			<p>or you could click the link to return</p>
-			<a href="login.html">click me</a>
+			<a href="/login.html">click me</a>
 		</div>
 	</div>
 	</div>
