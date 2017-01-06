@@ -105,7 +105,7 @@
 					}
 				});
 	}
-
+	
 	function deleteUser(id) {
 		var page = $("#pageNum").text();
 		var pageSize = $("#pageSize option:selected").val();
@@ -136,6 +136,17 @@
 		$(".info").remove();
 		getList(page, pageSize);
 		
+	}
+	
+
+	//禁用回车事件
+	//注册键盘事件
+	document.onkeydown = function(e) {
+		//捕捉回车事件
+		var ev = (typeof event != 'undefined') ? window.event : e;
+		if (ev.keyCode == 13 && document.activeElement.id == "jumpPage") {
+			return false;//禁用回车事件
+		}
 	}
 </script>
 </head>
